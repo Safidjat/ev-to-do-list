@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do list</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #22bbdd;
+        }
+        #cont{
+           background-color: #d6d5ce; 
+           width: 80%;
+           margin: auto;
+           padding: 20px;
+           border-radius: 10px;
+           margin-top: 30vh;
+        }
+        #ust{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        input,button{
+            height: 30px;
+            border-radius: 10px;
+            background-color: #dae9f6;
+        }
+        button:first-of-type{
+            width: 40px;
+        }
+        button:nth-child(3){
+            width: 80px;
+        }
+        button:nth-child(4){
+            width: 80px;
+        }
+        input{
+            padding: 0 20px;
+            outline: none;
+        }
+        .items{
+            width: 100%;
+            padding: 20px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: black;
+            color: #fff;
+            height: 50px;
+            border-radius: 5px;
+            margin-top: 30px;
+            button{
+                background-color: #c64120;
+                color: #000;
+                border-radius: 10px;
+                width: 50px;
+                border: none;
+            }
+        }
+        button{cursor: pointer;}
+        .disp{
+            display: none;
+        }
+        @media only screen and (max-width: 510px){
+            #ust{
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+        @media only screen and (min-width: 800px){
+            #cont{width: 60%;}
+        }
+    </style>
+</head>
+<body>
+    <div id="cont">
+        <div id="ust">
+            <input  type="text" />
+            <button onclick="add()">Add</button>
+            <button onclick="deleteAll()">Delete all</button>
+            <button onclick="removed()">Removed</button>
+        </div>
+        <div id="goster">
+           
+        </div>
+    </div>
+
+    <script>
+        const inp=document.querySelector('input')
+        const goster=document.getElementById('goster');
+        
+        // let inpArrayLen=[];
+        // let inpArrayVal=[];
+        let deletedArray=[];
+        let count=0;
+        let kod;
+        function add(){
+            if(inp.value){
+                for(let i=0;i<1;i++){
+                count++;
+                kod=`
+                        <div class="items">
+                            <span>${count}.${inp.value}</span>
+                            <button class="b">remove</button>
+                        </div> 
+                    `;
+                }
+                goster.innerHTML+=kod;
+                // inpArrayLen.push(inp.value.length);
+                // inpArrayVal.push(inp.value);
+                inp.value='';
+            }
+            
+            const all=document.querySelectorAll('.items');
+            const buts=document.querySelectorAll('.b');
+            const spans=document.querySelectorAll('span');
+            for(let i=0;i<all.length;i++){
+                buts[i].onclick=function(){
+                    deletedArray.push(all[i]);
+                    all[i].classList.toggle('disp');
+
+                    // for(let i=0;i<spans.length;i++){
+                    //    let temp= spans[i].innerHTML.slice(-1,-inpArrayLen[i]-1);
+                    //    temp=`${i+1}`;
+                    //    spans[i].innerHTML=`${temp}.${inpArrayVal[i]}`;
+                    // }
+
+                }
+            }
+        }
+        function deleteAll(){
+            goster.innerHTML='';
+            count=0;
+            inp.value='';
+        }
+        function removed(){
+            goster.innerHTML=``;
+            for(let i=0;i<deletedArray.length;i++){
+                deletedArray[i].classList.toggle('disp');//yoxdusa olsun
+                //goster.innerHTML+=`${deletedArray[i]}`; Здесь deletedArray[i] является ссылкой на DOM-элемент, но при преобразовании в строку результатом будет [object HTMLDivElement], а не сам HTML-элемент
+                //goster.innerHTML+=deletedArray[i];
+                goster.appendChild(deletedArray[i]);
+            }
+        }
+    </script>
+</body>
+</html>
